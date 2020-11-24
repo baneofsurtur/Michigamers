@@ -189,7 +189,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09e51d5f946015a4da87fc5ff2ffa0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
+  movement: 0
   jumpSpeed: 8
+  jumpHeight: 5
+  beatsPerMinute: 80
   groundCheckPoint: {fileID: 194695063}
   groundCheckRadius: 0.3
   groundLayer:
