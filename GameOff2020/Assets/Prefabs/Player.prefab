@@ -204,8 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   inputQueueSize: 7
-  jumpHeight: 5
-  beatsPerMinute: 80
+  jumpHeight: 3
   groundCheckPoint: {fileID: 194695063}
   groundCheckRadius: 0.03
   groundLayer:

@@ -6,11 +6,12 @@ public class PlayerInput : MonoBehaviour
     public float speed;
     public int inputQueueSize = 7;
     public float jumpHeight;
-    public float beatsPerMinute;
+    
     public Transform groundCheckPoint;
     public float groundCheckRadius;
     public LayerMask groundLayer;
 
+    private float beatsPerMinute;
     private float movement = 0f;
     private float secondsPerBeat;
     private float secondsPerHalfBeat;
@@ -20,16 +21,19 @@ public class PlayerInput : MonoBehaviour
     private float newAcceleration;
     private Queue<bool> inputQueue;
     private Animator playerAnimation;
+    private LevelHelper levelHelper;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         playerAnimation = GetComponent<Animator>();
+        levelHelper = new LevelHelper();
 
+        beatsPerMinute = levelHelper.songLoader.songData.track.tempo;
         secondsPerBeat = 60f / beatsPerMinute;
         secondsPerHalfBeat = secondsPerBeat / 2f;
-
+        
         inputQueue = new Queue<bool>(inputQueueSize);
 
         // Given fixed jump height, calculate gravity scale needed to fall from height in half a beat
