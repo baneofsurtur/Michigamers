@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -46,6 +47,9 @@ TagManager:
     locked: 0
   - name: Midground
     uniqueID: 3469459423
+    locked: 0
+  - name: Midground2
+    uniqueID: 821773637
     locked: 0
   - name: Foreground
     uniqueID: 3169853965

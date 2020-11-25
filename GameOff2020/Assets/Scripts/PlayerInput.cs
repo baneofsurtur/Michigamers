@@ -19,11 +19,14 @@ public class PlayerInput : MonoBehaviour
     private float jumpSpeedPrivate;
     private float newAcceleration;
     private Queue<bool> inputQueue;
+    private Animator playerAnimation;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        playerAnimation = GetComponent<Animator>();
+
         secondsPerBeat = 60f / beatsPerMinute;
         secondsPerHalfBeat = secondsPerBeat / 2f;
 
@@ -59,8 +62,9 @@ public class PlayerInput : MonoBehaviour
             }
         }
 
+        playerAnimation.SetBool("OnGround", this.isTouchingGround);
         // TODO: remove Support for moving the player left and right when the code that moves the level itself is checked in
-        movement = Input.GetAxis("Horizontal");
+        /*movement = Input.GetAxis("Horizontal");
         if (movement == 0f)
         {
             rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
@@ -68,6 +72,6 @@ public class PlayerInput : MonoBehaviour
         else
         {
             rigidBody.velocity = new Vector2(movement * speed, rigidBody.velocity.y);
-        }
+        }*/
     }
 }

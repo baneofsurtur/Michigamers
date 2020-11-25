@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 1965654939632842149}
   - component: {fileID: 1965654939632842150}
   - component: {fileID: 66329676}
+  - component: {fileID: 1159074402}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -59,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 1965654939632842146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.21, y: 0.51, z: 0}
-  m_LocalScale: {x: -0.9375, y: 1, z: 1}
+  m_LocalScale: {x: -0.3358244, y: 0.35821268, z: 0.35821268}
   m_Children:
   - {fileID: 194695063}
   m_Father: {fileID: 0}
@@ -102,11 +103,12 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1125113331
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 86ce912717672b8429c58e6960c12e25, type: 3}
+  m_Sprite: {fileID: -7750761410467519339, guid: dfc7090c56f3626418196653e1eb610d,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1.28, y: 1.28}
@@ -152,8 +154,8 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 2.31, y: 4.7999997}
     newSize: {x: 1.28, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -161,22 +163,33 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.61, y: 0.21}
-      - {x: 0.59, y: 0.24}
-      - {x: 0.29, y: 0.32999998}
-      - {x: 0.06, y: 0.32999998}
-      - {x: -0.02, y: 0.31}
-      - {x: -0.21, y: 0.26999998}
-      - {x: -0.35, y: 0.19}
-      - {x: -0.38, y: 0.049999997}
-      - {x: -0.51, y: 0.07}
-      - {x: -0.57, y: -0.01}
-      - {x: -0.57, y: -0.11}
-      - {x: -0.45, y: -0.22999999}
-      - {x: -0.25, y: -0.34}
-      - {x: 0.42999998, y: -0.34}
-      - {x: 0.59999996, y: -0.12}
-      - {x: 0.61, y: 0.089999996}
+    - - {x: 0.19500016, y: 0}
+      - {x: 0.72000015, y: 0}
+      - {x: 0.7387501, y: 0.31875}
+      - {x: 0.5887501, y: 0.37499997}
+      - {x: 0.72000015, y: 1.1999999}
+      - {x: 0.7575001, y: 2.5124998}
+      - {x: 0.8700001, y: 2.6249998}
+      - {x: 1.1700001, y: 3.0937498}
+      - {x: 1.1700001, y: 4.0312495}
+      - {x: 0.7762501, y: 4.575}
+      - {x: 0.38250014, y: 4.6874995}
+      - {x: -0.4612498, y: 4.6874995}
+      - {x: -0.7799998, y: 4.575}
+      - {x: -1.1549997, y: 3.9937499}
+      - {x: -1.1549997, y: 3.0562499}
+      - {x: -1.0049998, y: 2.64375}
+      - {x: -0.84734094, y: 2.5523934}
+      - {x: -0.67734873, y: 2.4778926}
+      - {x: -0.7789724, y: 1.61387}
+      - {x: -0.813156, y: 1.2937499}
+      - {x: -0.83624977, y: 1.1249999}
+      - {x: -0.7049998, y: 1.1624999}
+      - {x: -0.7049998, y: 0}
+      - {x: -0.17999981, y: 0}
+      - {x: -0.16124982, y: 0.31875}
+      - {x: -0.3299998, y: 0.86249995}
+      - {x: 0.19500016, y: 0.86249995}
 --- !u!114 &66329676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,12 +203,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  movement: 0
-  jumpSpeed: 8
+  inputQueueSize: 7
   jumpHeight: 5
   beatsPerMinute: 80
   groundCheckPoint: {fileID: 194695063}
-  groundCheckRadius: 0.3
+  groundCheckRadius: 0.03
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+--- !u!95 &1159074402
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965654939632842146}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b64e8ca8fafef492b98521d7c387bcac, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
