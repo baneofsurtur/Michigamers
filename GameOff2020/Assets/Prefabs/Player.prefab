@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: -1125113331
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 86ce912717672b8429c58e6960c12e25, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0bc46f6f426244719848a8f196c6cb2f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -186,16 +186,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1965654939632842146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09e51d5f946015a4da87fc5ff2ffa0c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 617064a4bca964b4d8827f307480ac99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  movement: 0
-  jumpSpeed: 8
+  inputQueueSize: 7
   jumpHeight: 5
   beatsPerMinute: 80
   groundCheckPoint: {fileID: 194695063}
-  groundCheckRadius: 0.3
+  groundCheckRadius: 0.03
   groundLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
