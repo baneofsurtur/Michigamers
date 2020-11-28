@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Loads the midground level into the game and sets is scrolling soeed.
+ */
 public class MidGroundLoader : MonoBehaviour
 {
     public GameObject midGroundObject;
@@ -9,18 +12,18 @@ public class MidGroundLoader : MonoBehaviour
     private LevelHelper levelHelper;
     public float time = 0f;
 
-    // Start is called before the first frame update
-    void Start()
+    /*
+    * Create midground chunks to account for the full legth of the level 
+    * and load them in
+    */
+    public void loadMidGroundChunks()
     {
-        levelHelper = new LevelHelper();
-        midGroundTransformer = GetComponent<Transform>();
-        time = levelHelper.time;
-
         float position = levelHelper.startingPosition;
 
-        while (position < levelHelper.levelLength - levelHelper.secondsToUnitsConversion)
+        while (position <
+            levelHelper.levelLength - levelHelper.secondsToUnitsConversion)
         {
-            
+
             GameObject midGround = Instantiate(
                 midGroundObject,
                 new Vector3(position, -.8f, 0),
@@ -35,14 +38,29 @@ public class MidGroundLoader : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    // Start is called before the first frame update
+    void Start()
+    {
+        levelHelper = LevelHelper.createLevelHelper(gameObject);
+        midGroundTransformer = GetComponent<Transform>();
+        time = levelHelper.time;
+
+        loadMidGroundChunks();
+    }
+
+    /* Update is called once per frame.
+     * Shift x position of midground chunks in the negative direction such that 
+     * the midground moves to the left at a rate of 
+     * levelHelper.secondsToUnitsConversion / 3 per second.  The division by 
+     * three is to make the midground scroll slower than the main level.
+     */
     void Update()
     {
         time = (float)Time.deltaTime / 1f;
         midGroundTransformer.position = new Vector2(
-            this.midGroundTransformer.position.x -
+            midGroundTransformer.position.x -
                 (time * (levelHelper.secondsToUnitsConversion / 3)),
-            this.midGroundTransformer.position.y
+            midGroundTransformer.position.y
         );
     }
 }

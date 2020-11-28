@@ -9,13 +9,12 @@ public class FarMidGroundLoader : MonoBehaviour
     private LevelHelper levelHelper;
     public float time = 0f;
 
-    // Start is called before the first frame update
-    void Start()
+    /*
+    * Create far-midground chunks to account for the full legth of the level 
+    * and load them in
+    */
+    public void loadFarMidGroundChunks()
     {
-        levelHelper = new LevelHelper();
-        farMidGroundTransformer = GetComponent<Transform>();
-        time = levelHelper.time;
-
         float position = levelHelper.startingPosition;
         while (position <
             levelHelper.levelLength - levelHelper.secondsToUnitsConversion)
@@ -36,14 +35,30 @@ public class FarMidGroundLoader : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    // Start is called before the first frame update
+    void Start()
+    {
+        levelHelper = LevelHelper.createLevelHelper(gameObject);
+        farMidGroundTransformer = GetComponent<Transform>();
+        time = levelHelper.time;
+
+        loadFarMidGroundChunks();
+    }
+
+   /* Update is called once per frame.
+    * Shift x position of far-midground chunks in the negative direction 
+    * such that the midground moves to the left at a rate of 
+    * levelHelper.secondsToUnitsConversion / 4 per second.  The division by 
+    * four is to make the far-midground scroll slower than the 
+    * main level and midground.
+    */
     void Update()
     {
         time = (float)Time.deltaTime / 1f;
         farMidGroundTransformer.position = new Vector2(
-           this.farMidGroundTransformer.position.x -
+           farMidGroundTransformer.position.x -
                 (time * (levelHelper.secondsToUnitsConversion / 4)),
-           this.farMidGroundTransformer.position.y
+           farMidGroundTransformer.position.y
        );
     }
 }

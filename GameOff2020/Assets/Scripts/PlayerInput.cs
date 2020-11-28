@@ -12,7 +12,6 @@ public class PlayerInput : MonoBehaviour
     public LayerMask groundLayer;
 
     private float beatsPerMinute;
-    private float movement = 0f;
     private float secondsPerBeat;
     private float secondsPerHalfBeat;
     private bool isTouchingGround;
@@ -28,7 +27,7 @@ public class PlayerInput : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         playerAnimation = GetComponent<Animator>();
-        levelHelper = new LevelHelper();
+        levelHelper = LevelHelper.createLevelHelper(gameObject);
 
         beatsPerMinute = levelHelper.songLoader.songData.track.tempo;
         secondsPerBeat = 60f / beatsPerMinute;
@@ -67,15 +66,5 @@ public class PlayerInput : MonoBehaviour
         }
 
         playerAnimation.SetBool("OnGround", this.isTouchingGround);
-        // TODO: remove Support for moving the player left and right when the code that moves the level itself is checked in
-        /*movement = Input.GetAxis("Horizontal");
-        if (movement == 0f)
-        {
-            rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
-        }
-        else
-        {
-            rigidBody.velocity = new Vector2(movement * speed, rigidBody.velocity.y);
-        }*/
     }
 }

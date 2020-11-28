@@ -49,27 +49,36 @@ public class SongData
 
 }
 
+/*
+ * A class responsible for loading song data from a spotify analysis file
+ * into the appropriate classes
+ */
 public class SongLoader : MonoBehaviour
 {
     public TextAsset songDataTextFile;
     public SongData songData;
 
     private string songFileAsString;
-    
 
-
-    public SongLoader()
+    /*
+     * Create a new instance of SongLoader and attach it to the 
+     * provided game object.
+     */
+    public static SongLoader createSongLoader(GameObject gameObject)
     {
-        songDataTextFile = Resources.Load<TextAsset>("GhostFair");
-        songFileAsString = this.songDataTextFile.text;
-        
-        songData =
-            JsonUtility.FromJson<SongData>(this.songFileAsString);
+        SongLoader songLoaderObject = gameObject.AddComponent<SongLoader>();
+        songLoaderObject.songDataTextFile = Resources.Load<TextAsset>("GhostFair");
+        songLoaderObject.songFileAsString = songLoaderObject.songDataTextFile.text;
+
+        songLoaderObject.songData =
+            JsonUtility.FromJson<SongData>(songLoaderObject.songFileAsString);
+        return songLoaderObject;
     }
 
     // Start is called before the first frame update
     void Start()
-    { 
+    {
+        
     }
 
     // Update is called once per frame

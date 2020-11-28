@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * A helper class containing shared objects and methods used by 
+ * mutiple level related scripts.
+ */
 public class LevelHelper : MonoBehaviour
 {
     public float secondsToUnitsConversion = 10f;
@@ -14,20 +18,34 @@ public class LevelHelper : MonoBehaviour
     public float halfWidth;
     public int levelLength = 0;
 
-    public LevelHelper()
+    /*
+     * Create a new instance of LevelHelper and attach it to the 
+     * provided game object.
+     */
+    public static LevelHelper createLevelHelper(GameObject gameObject)
     {
-        songLoader = new SongLoader();
-        soundSections = songLoader.songData.sections;
-        duration = songLoader.songData.track.duration;
-        fadeOut = songLoader.songData.track.start_of_fade_out;
-        levelLength = Mathf.CeilToInt(secondsToUnitsConversion * duration);
+        LevelHelper levelHelper = gameObject.AddComponent<LevelHelper>();
+        levelHelper.songLoader = SongLoader.createSongLoader(gameObject);
+
+        levelHelper.soundSections = levelHelper.songLoader.songData.sections;
+        levelHelper.duration = levelHelper.songLoader.songData.track.duration;
+        levelHelper.fadeOut = levelHelper.songLoader.songData.track.start_of_fade_out;
+        levelHelper.levelLength = Mathf.CeilToInt(
+            levelHelper.secondsToUnitsConversion * levelHelper.duration
+        );
 
         Camera camera = Camera.main;
         float halfHeight = camera.orthographicSize;
-        halfWidth = camera.aspect * halfHeight;
-        startingPosition = -halfWidth;
+        levelHelper.halfWidth = camera.aspect * halfHeight;
+        levelHelper.startingPosition = -levelHelper.halfWidth;
+
+        return levelHelper;
     }
 
+    /*
+     * Takes in a game object and a size in units and resizes the game objects 
+     * horizontal length to the provided unit size.
+     */
     public void newXScale(GameObject theGameObject, float newSize)
     {
 
