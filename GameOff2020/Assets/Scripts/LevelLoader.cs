@@ -16,11 +16,14 @@ public class LevelLoader : MonoBehaviour
     public GameObject moonBaseObject;
     public Transform levelTransformer;
     public float time = 0f;
+    public static LevelLoader instance;
 
     private LevelHelper levelHelper;
     private float moonBaseStart;
-    private bool endReached = false;
-    private GameObject player;
+    public bool endReached = false;
+    public GameObject player;
+    private GameObject moonBase;
+    private float levelEndPoint;
 
     /*
      * Create level chunks to account for the full legth of the level 
@@ -71,6 +74,12 @@ public class LevelLoader : MonoBehaviour
             {
                 Bar bar = (Bar)soundBars.GetValue(barCounter);
 
+                if (bar.start > levelHelper.songLoader.songData.track.start_of_fade_out)
+                {
+                    break;
+                }
+
+                Debug.Log("Bar  start: " + bar.start);
                 if (bar.start <= sectionEnd)
                 {
                     GameObject newObsticle = Instantiate(
@@ -94,13 +103,17 @@ public class LevelLoader : MonoBehaviour
             }
         }
     }
-    
+
+    void Awake() // note it's now Awake instead of Start. That's important.
+    {
+        instance = this; // hold a reference to the (last) instance of this class
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         levelHelper = LevelHelper.createLevelHelper(gameObject);
         levelTransformer = GetComponent<Transform>();
-        moonBaseStart = levelHelper.secondsToUnitsConversion * levelHelper.songLoader.songData.track.start_of_fade_out;
 
         time = levelHelper.time;
 
@@ -117,13 +130,19 @@ public class LevelLoader : MonoBehaviour
         loadObsticles();
 
         
-        GameObject moonBase = Instantiate(
+        moonBase = Instantiate(
                 moonBaseObject,
-                new Vector3(moonBaseStart, 8.2f, 0),
+                new Vector3(0, 8.2f, 0),
                 Quaternion.identity
-            );
-        moonBase.transform.parent =
-                          GameObject.Find("Level").transform;
+        );
+        moonBase.transform.parent = GameObject.Find("Level").transform;
+
+        float moonBaseWidth = moonBase.GetComponent<Collider2D>().bounds.size.x;
+        float moonBaseRadius = moonBaseWidth / 2f;
+        moonBaseStart = levelHelper.secondsToUnitsConversion * levelHelper.songLoader.songData.track.start_of_fade_out + moonBaseRadius;
+        moonBase.transform.position = new Vector2(moonBaseStart, moonBase.transform.position.y);
+
+        levelEndPoint = GameObject.Find("ExplodingShip").transform.position.x + 2;
     }
 
     /* Update is called once per frame.
@@ -133,7 +152,9 @@ public class LevelLoader : MonoBehaviour
      */
     void Update()
     {
-        if (player.transform.position.x >= moonBaseStart + 30)
+        levelEndPoint -= time * levelHelper.secondsToUnitsConversion;
+        
+        if (player.transform.position.x >= levelEndPoint)
         {
             endReached = true;
         }

@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Loads the far-midground level into the game and sets is scrolling soeed.
+ */
 public class FarMidGroundLoader : MonoBehaviour
 {
     public GameObject farMidGroundObject;
     public Transform farMidGroundTransformer;
     private LevelHelper levelHelper;
+    LevelLoader levelLoader;
     public float time = 0f;
 
     /*
@@ -38,6 +42,7 @@ public class FarMidGroundLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        levelLoader = LevelLoader.instance;
         levelHelper = LevelHelper.createLevelHelper(gameObject);
         farMidGroundTransformer = GetComponent<Transform>();
         time = levelHelper.time;
@@ -54,7 +59,15 @@ public class FarMidGroundLoader : MonoBehaviour
     */
     void Update()
     {
-        time = (float)Time.deltaTime / 1f;
+        if (levelLoader.endReached)
+        {
+            time = 0f;
+        }
+        else
+        {
+            time = (float)Time.deltaTime / 1f;
+        }
+
         farMidGroundTransformer.position = new Vector2(
            farMidGroundTransformer.position.x -
                 (time * (levelHelper.secondsToUnitsConversion / 4)),

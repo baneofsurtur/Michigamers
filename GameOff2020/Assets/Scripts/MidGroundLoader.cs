@@ -10,6 +10,7 @@ public class MidGroundLoader : MonoBehaviour
     public GameObject midGroundObject;
     public Transform midGroundTransformer;
     private LevelHelper levelHelper;
+    LevelLoader levelLoader;
     public float time = 0f;
 
     /*
@@ -41,6 +42,7 @@ public class MidGroundLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        levelLoader = LevelLoader.instance;
         levelHelper = LevelHelper.createLevelHelper(gameObject);
         midGroundTransformer = GetComponent<Transform>();
         time = levelHelper.time;
@@ -56,7 +58,16 @@ public class MidGroundLoader : MonoBehaviour
      */
     void Update()
     {
-        time = (float)Time.deltaTime / 1f;
+        if (levelLoader.endReached)
+        {
+            time = 0f;
+        }
+        else
+        {
+            time = (float)Time.deltaTime / 1f;
+        }
+
+        Debug.Log("From midground, level coord is: " + levelLoader.levelTransformer.position.x);
         midGroundTransformer.position = new Vector2(
             midGroundTransformer.position.x -
                 (time * (levelHelper.secondsToUnitsConversion / 3)),
