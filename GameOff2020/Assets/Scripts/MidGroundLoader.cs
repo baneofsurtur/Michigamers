@@ -67,7 +67,6 @@ public class MidGroundLoader : MonoBehaviour
             time = (float)Time.deltaTime / 1f;
         }
 
-        Debug.Log("From midground, level coord is: " + levelLoader.levelTransformer.position.x);
         midGroundTransformer.position = new Vector2(
             midGroundTransformer.position.x -
                 (time * (levelHelper.secondsToUnitsConversion / 3)),

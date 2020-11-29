@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /*
  * Loads the main level into the game and sets is scrolling soeed.
@@ -79,7 +80,6 @@ public class LevelLoader : MonoBehaviour
                     break;
                 }
 
-                Debug.Log("Bar  start: " + bar.start);
                 if (bar.start <= sectionEnd)
                 {
                     GameObject newObsticle = Instantiate(
@@ -104,9 +104,17 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
-    void Awake() // note it's now Awake instead of Start. That's important.
+    /*
+     * Set current instance as an accisable public variable so 
+     * midground and far-midground layers know when the level has ended
+     * 
+     * TODO: Extract out a higher level container class which initilizes the
+     * ground, midgorund, and far-midground so that common variables can be 
+     * shared more easily.
+     */
+    void Awake()
     {
-        instance = this; // hold a reference to the (last) instance of this class
+        instance = this;
     }
 
     // Start is called before the first frame update
@@ -172,5 +180,59 @@ public class LevelLoader : MonoBehaviour
             levelTransformer.position.x - (time * levelHelper.secondsToUnitsConversion),
             levelTransformer.position.y
         );
+    }
+
+    /*
+     * Load Success Window at the end of the game.
+     */
+    void OnGUI()
+    {
+        if (endReached)
+        {
+            Rect windowRect = GUI.Window(
+                0,
+                new Rect(200, 50, 300, 300),
+                InitSucessWindow,
+                ""
+            );
+        }
+    }
+
+    /*
+     * Create Contents of Success window.
+     */
+    void InitSucessWindow(int windowId)
+    {
+        GUIStyle sucessLabelStyle = new GUIStyle(GUI.skin.GetStyle("label"))
+        {
+            wordWrap = true,
+            fontSize = 20,
+            alignment = TextAnchor.UpperCenter
+        };
+
+        sucessLabelStyle.normal.textColor = Color.cyan;
+
+        GUI.Label(
+            new Rect(50, 50, 200f, 200f),
+            "Blue Blazes, You're Awesome!!!",
+            sucessLabelStyle
+        );
+
+        if (GUI.Button(new Rect(50, 150, 200, 20), "Restart"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        if (GUI.Button(new Rect(50, 200, 200, 20), "Quit"))
+        {
+            if (Application.isEditor)
+            {
+                UnityEditor.EditorApplication.isPlaying = false;
+            }
+            else
+            {
+                Application.Quit();
+            }       
+        }
     }
 }

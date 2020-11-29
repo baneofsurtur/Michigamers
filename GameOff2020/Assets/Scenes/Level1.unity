@@ -160,6 +160,8 @@ MonoBehaviour:
     type: 3}
   levelTransformer: {fileID: 0}
   time: 0
+  endReached: 0
+  player: {fileID: 0}
 --- !u!4 &415382071
 Transform:
   m_ObjectHideFlags: 0
