@@ -156,6 +156,8 @@ MonoBehaviour:
     type: 3}
   obsticleObject: {fileID: 2367068543901861457, guid: 4a1a62190abc640068a6e2ee84b26972,
     type: 3}
+  moonBaseObject: {fileID: 3201137349319938038, guid: 8dd33b5d228ae44d798521214a4d2fc7,
+    type: 3}
   levelTransformer: {fileID: 0}
   time: 0
 --- !u!4 &415382071

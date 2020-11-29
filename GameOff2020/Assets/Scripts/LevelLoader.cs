@@ -13,9 +13,14 @@ public class LevelLoader : MonoBehaviour
     public GameObject groundObject;
     public GameObject playerObject;
     public GameObject obsticleObject;
+    public GameObject moonBaseObject;
     public Transform levelTransformer;
-    private LevelHelper levelHelper;
     public float time = 0f;
+
+    private LevelHelper levelHelper;
+    private float moonBaseStart;
+    private bool endReached = false;
+    private GameObject player;
 
     /*
      * Create level chunks to account for the full legth of the level 
@@ -95,13 +100,14 @@ public class LevelLoader : MonoBehaviour
     {
         levelHelper = LevelHelper.createLevelHelper(gameObject);
         levelTransformer = GetComponent<Transform>();
+        moonBaseStart = levelHelper.secondsToUnitsConversion * levelHelper.songLoader.songData.track.start_of_fade_out;
 
         time = levelHelper.time;
 
         loadLevelChunks();
 
         //Create player prefab object and load it into the proper position
-        Instantiate(
+        player = Instantiate(
             playerObject,
             new Vector3(-levelHelper.halfWidth / 2, -1.5f, 0),
             Quaternion.identity
@@ -109,6 +115,15 @@ public class LevelLoader : MonoBehaviour
 
        
         loadObsticles();
+
+        
+        GameObject moonBase = Instantiate(
+                moonBaseObject,
+                new Vector3(moonBaseStart, 8.2f, 0),
+                Quaternion.identity
+            );
+        moonBase.transform.parent =
+                          GameObject.Find("Level").transform;
     }
 
     /* Update is called once per frame.
@@ -118,7 +133,20 @@ public class LevelLoader : MonoBehaviour
      */
     void Update()
     {
-        time = (float) Time.deltaTime / 1f;
+        if (player.transform.position.x >= moonBaseStart + 30)
+        {
+            endReached = true;
+        }
+
+        if (endReached)
+        {
+            time = 0f;
+        }
+        else
+        {
+            time = (float)Time.deltaTime / 1f;
+        }
+        
         levelTransformer.position = new Vector2(
             levelTransformer.position.x - (time * levelHelper.secondsToUnitsConversion),
             levelTransformer.position.y

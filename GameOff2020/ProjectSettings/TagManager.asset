@@ -51,6 +51,30 @@ TagManager:
   - name: Midground2
     uniqueID: 821773637
     locked: 0
+  - name: BaseTrees
+    uniqueID: 2486177813
+    locked: 0
+  - name: BaseBoxesBehind
+    uniqueID: 1282179145
+    locked: 0
+  - name: BaseShip
+    uniqueID: 2507634979
+    locked: 0
+  - name: BaseBoxes
+    uniqueID: 884591323
+    locked: 0
+  - name: BaseSwitch
+    uniqueID: 2614614455
+    locked: 0
+  - name: BaseGround
+    uniqueID: 1837451469
+    locked: 0
   - name: Foreground
     uniqueID: 3169853965
+    locked: 0
+  - name: Player
+    uniqueID: 2823795819
+    locked: 0
+  - name: BaseDome
+    uniqueID: 972216381
     locked: 0
