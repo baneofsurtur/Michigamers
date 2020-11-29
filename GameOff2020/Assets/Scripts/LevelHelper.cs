@@ -16,7 +16,9 @@ public class LevelHelper : MonoBehaviour
     public List<Section> soundSections;
     public float startingPosition;
     public float halfWidth;
+    public float halfHeight;
     public int levelLength = 0;
+    public bool gameOver;
 
     /*
      * Create a new instance of LevelHelper and attach it to the 
@@ -35,8 +37,8 @@ public class LevelHelper : MonoBehaviour
         );
 
         Camera camera = Camera.main;
-        float halfHeight = camera.orthographicSize;
-        levelHelper.halfWidth = camera.aspect * halfHeight;
+        levelHelper.halfHeight = camera.orthographicSize;
+        levelHelper.halfWidth = camera.aspect * levelHelper.halfHeight;
         levelHelper.startingPosition = -levelHelper.halfWidth;
 
         return levelHelper;

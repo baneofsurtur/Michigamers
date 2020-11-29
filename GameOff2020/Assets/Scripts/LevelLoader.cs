@@ -18,13 +18,14 @@ public class LevelLoader : MonoBehaviour
     public Transform levelTransformer;
     public float time = 0f;
     public static LevelLoader instance;
+    public bool endReached = false;
+    public GameObject player;
 
     private LevelHelper levelHelper;
     private float moonBaseStart;
-    public bool endReached = false;
-    public GameObject player;
     private GameObject moonBase;
     private float levelEndPoint;
+    
 
     /*
      * Create level chunks to account for the full legth of the level 
@@ -63,7 +64,7 @@ public class LevelLoader : MonoBehaviour
         List<Section> soundSections = levelHelper.songLoader.songData.sections;
 
         int totalBarCount = soundBars.Length;
-        int barCounter = 0;
+        int barCounter = 4;
 
         foreach (Section section in soundSections)
         {
@@ -86,7 +87,7 @@ public class LevelLoader : MonoBehaviour
                         obsticleObject,
                         new Vector3(
                             bar.start * levelHelper.secondsToUnitsConversion,
-                            -1,
+                            -.85f,
                             0
                         ),
                         Quaternion.identity
@@ -134,7 +135,6 @@ public class LevelLoader : MonoBehaviour
             Quaternion.identity
         );
 
-       
         loadObsticles();
 
         
@@ -167,7 +167,7 @@ public class LevelLoader : MonoBehaviour
             endReached = true;
         }
 
-        if (endReached)
+        if (endReached || PlayerInput.gameOver)
         {
             time = 0f;
         }
@@ -187,7 +187,7 @@ public class LevelLoader : MonoBehaviour
      */
     void OnGUI()
     {
-        if (endReached)
+        if (endReached || PlayerInput.gameOver)
         {
             Rect windowRect = GUI.Window(
                 0,
@@ -212,14 +212,16 @@ public class LevelLoader : MonoBehaviour
 
         sucessLabelStyle.normal.textColor = Color.cyan;
 
+        string label = PlayerInput.gameOver ? "Game Over" : "Blue Blazes, You're Awesome!!!";
         GUI.Label(
             new Rect(50, 50, 200f, 200f),
-            "Blue Blazes, You're Awesome!!!",
+            label,
             sucessLabelStyle
         );
 
         if (GUI.Button(new Rect(50, 150, 200, 20), "Restart"))
         {
+            PlayerInput.gameOver = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 

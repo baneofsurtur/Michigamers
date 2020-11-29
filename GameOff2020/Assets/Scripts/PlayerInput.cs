@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour
     public Transform groundCheckPoint;
     public float groundCheckRadius;
     public LayerMask groundLayer;
+    public static bool gameOver = false;
 
     private float beatsPerMinute;
     private float secondsPerBeat;

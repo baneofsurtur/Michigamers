@@ -58,7 +58,7 @@ public class MidGroundLoader : MonoBehaviour
      */
     void Update()
     {
-        if (levelLoader.endReached)
+        if (levelLoader.endReached || PlayerInput.gameOver)
         {
             time = 0f;
         }
