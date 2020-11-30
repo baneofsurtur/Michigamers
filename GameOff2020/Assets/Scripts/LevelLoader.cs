@@ -19,13 +19,16 @@ public class LevelLoader : MonoBehaviour
     public float time = 0f;
     public static LevelLoader instance;
     public bool endReached = false;
+    public bool paused = false;
     public GameObject player;
 
     private LevelHelper levelHelper;
     private float moonBaseStart;
     private GameObject moonBase;
     private float levelEndPoint;
+    private AudioSource audioSource;
     
+
 
     /*
      * Create level chunks to account for the full legth of the level 
@@ -64,7 +67,7 @@ public class LevelLoader : MonoBehaviour
         List<Section> soundSections = levelHelper.songLoader.songData.sections;
 
         int totalBarCount = soundBars.Length;
-        int barCounter = 4;
+        int barCounter = 2;
 
         foreach (Section section in soundSections)
         {
@@ -123,6 +126,9 @@ public class LevelLoader : MonoBehaviour
     {
         levelHelper = LevelHelper.createLevelHelper(gameObject);
         levelTransformer = GetComponent<Transform>();
+        Camera camera = Camera.main;
+
+        audioSource = camera.GetComponent<AudioSource>();
 
         time = levelHelper.time;
 
@@ -160,6 +166,11 @@ public class LevelLoader : MonoBehaviour
      */
     void Update()
     {
+        if (PlayerInput.gameOver)
+        {
+            Time.timeScale = 0;
+        }
+
         levelEndPoint -= time * levelHelper.secondsToUnitsConversion;
         
         if (player.transform.position.x >= levelEndPoint)
@@ -167,7 +178,7 @@ public class LevelLoader : MonoBehaviour
             endReached = true;
         }
 
-        if (endReached || PlayerInput.gameOver)
+        if (endReached)
         {
             time = 0f;
         }
@@ -183,25 +194,32 @@ public class LevelLoader : MonoBehaviour
     }
 
     /*
-     * Load Success Window at the end of the game.
+     * Load Menu Window.
      */
     void OnGUI()
     {
-        if (endReached || PlayerInput.gameOver)
+        if (GUI.Button(new Rect(650, 10, 30, 20), "| |"))
         {
+            Time.timeScale = 0;
+            paused = true;
+            audioSource.Pause();
+        }
+
+        if (endReached || PlayerInput.gameOver || paused)
+        {              
             Rect windowRect = GUI.Window(
                 0,
                 new Rect(200, 50, 300, 300),
-                InitSucessWindow,
+                InitMenuWindow,
                 ""
             );
         }
     }
 
     /*
-     * Create Contents of Success window.
+     * Create Contents of menu window.
      */
-    void InitSucessWindow(int windowId)
+    void InitMenuWindow(int windowId)
     {
         GUIStyle sucessLabelStyle = new GUIStyle(GUI.skin.GetStyle("label"))
         {
@@ -212,20 +230,43 @@ public class LevelLoader : MonoBehaviour
 
         sucessLabelStyle.normal.textColor = Color.cyan;
 
-        string label = PlayerInput.gameOver ? "Game Over" : "Blue Blazes, You're Awesome!!!";
+        string label = "";
+        if (PlayerInput.gameOver) {
+            label = "Game Over";
+        }
+        else if (endReached)
+        {
+            label = "Blue Blazes, You're Awesome!!!";
+        }
+        else if (paused)
+        {
+            label = "Paused";
+        }
+
         GUI.Label(
             new Rect(50, 50, 200f, 200f),
             label,
             sucessLabelStyle
         );
 
-        if (GUI.Button(new Rect(50, 150, 200, 20), "Restart"))
+        if (paused)
+        {
+            if (GUI.Button(new Rect(50, 150, 200, 20), "Resume"))
+            {
+                Time.timeScale = 1;
+                audioSource.Play();
+                paused = false;
+            }
+        }
+       
+        if (GUI.Button(new Rect(50, paused ? 200 : 150, 200, 20), "Restart"))
         {
             PlayerInput.gameOver = false;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Time.timeScale = 1;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);      
         }
 
-        if (GUI.Button(new Rect(50, 200, 200, 20), "Quit"))
+        if (GUI.Button(new Rect(50, paused ? 250 : 200, 200, 20), "Quit"))
         {
             if (Application.isEditor)
             {
