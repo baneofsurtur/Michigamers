@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: d0fc345c07c28c048824aefebd8a5f70
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: The Moon
+  fontNames:
+  - The Moon
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d3881bcde5cb5424e99b4b9735300612, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
