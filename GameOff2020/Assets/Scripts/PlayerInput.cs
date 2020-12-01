@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿/* Copyright Michigamers 11/29/2020.  All rights reserved */
+
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour

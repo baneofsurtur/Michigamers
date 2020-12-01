@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿/* Copyright Michigamers 11/29/2020.  All rights reserved */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
